@@ -1,0 +1,28 @@
+NAME = school
+
+# Define object files based on source files
+SRC := $(wildcard *.c)
+OBJ := $(patsubst %.c,%.o,$(SRC))
+
+# Implicit rule to compile source files
+%.o : %.c m.h
+        $(CC) -Wall -Werror -Wextra -pedantic -c $< -o $@
+
+# Target to build the executable
+all: $(OBJ)
+        $(CC) $(OBJ) -o $(NAME)
+
+# Rule to clean everything
+clean:
+        $(RM) -rf $(OBJ) $(NAME)
+
+# Recompile everything (forces clean and rebuild)
+re: clean all
+
+# fclean: clean with object files
+fclean: clean
+
+# oclean: clean with only object files
+oclean:
+        $(RM) -rf $(OBJ)
+
